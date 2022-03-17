@@ -1,0 +1,138 @@
+body
+{
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#playTable
+{
+	border-collapse:none;
+	border-spacing:0px;
+	margin:5px 15px;
+	/*
+	width:700px;
+	height:700px;
+	*/
+}
+.playerNamePlate
+{
+	position:fixed;
+	display:none;
+}
+
+#titleArea
+{
+	grid-area:titleArea;
+	display:grid-item;	
+}
+#playTable tr td
+{
+	/*
+	border:1px solid black;
+	*/
+	width:5px;
+	height:3px;
+}
+#playArea
+{
+	display:grid-item;
+	grid-area:gameArea;
+    align-self: center;
+    justify-self: center;
+
+}
+#sourceImage
+{
+	display:none;
+}
+#canvas
+{
+	display:none;
+}
+#gameArea
+{
+	border:2px solid grey;
+	background:#888;
+	margin:0 auto;
+	width:100%;
+	text-align:center;
+	grid-template-areas:'titleArea titleArea' 'gameArea scoreBoard' 'gameArea eventArea';
+	grid-template-columns: calc(100% - 450px) 400px; 
+	grid-template-rows: 56px 250px calc(100% - 320px);
+	display:grid;	
+	
+}
+
+#controlBoard
+{
+	grid-area:scoreBoard;
+	display:grid-item;
+	text-align:left;
+	width:400px;
+	height:250px;
+}
+.scorePoints
+{
+ 	text-align: right;
+	 float:right;
+}
+
+.scoreName
+{
+	text-align: left;
+}
+
+.gameTimer
+{
+	font-size: 32px;
+	text-align:center;
+}
+
+#eventLog
+{
+	vertical-align: top;
+	grid-area:eventArea;
+	display:grid-item;
+	text-align:left;
+	width:400px;
+	height:100%;
+	overflow-y: auto;
+}
+#eventLog div
+{
+	border: 2px solid black;
+	padding:7px;
+	size:16px;
+}
+#buttonArea
+{
+	margin:10px auto;
+	width:170px;	
+}
+.isTree
+{
+	background:#00FF00;
+}
+.isNut
+{
+	background:#FFFF00;
+}
+.isBush
+{
+	background:#804C19;
+}
+.isWater
+{
+	background:#00FFFF;
+}
+.isGrass
+{
+	background:#94BD5E;
+}
+.isNest
+{
+	background:#FF3366;
+}
+.isSquirrel
+{
+	background:#000000;
+}
