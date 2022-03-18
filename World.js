@@ -68,10 +68,12 @@ class World {
             case "148-189-94":
                 return "isGrass";
             case "0-255-0":
+            case "1-255-0":
                 return "isTree";
             case "128-76-25":
                 return "isBush";
             case "0-255-255":
+            case "1-255-255":
                 return "isWater";
             case "255-51-102":
                 return "isNest";  
