@@ -1,11 +1,10 @@
 
 
 class EventLog {
-    static #eventDiv = document.getElementById("eventLog");
     static #lastLog = null;
     constructor(message, color)
     {
-        EventLog.log(message, color);
+        this.log(message, color);
     }
 
     static log(message, color)
@@ -14,6 +13,6 @@ class EventLog {
         log.setAttribute("class", "eventLogEntry");
         log.style.background = color;
         log.innerHTML = message;
-        EventLog.#lastLog = EventLog.#eventDiv.insertBefore(log, EventLog.#lastLog);
+        document.getElementById("eventLog").insertBefore(log, EventLog.#lastLog);
     }
 }

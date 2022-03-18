@@ -1,31 +1,17 @@
+<!DOCTYPE html>
+
 <link rel='stylesheet' type='text/css' media='screen' href='style.css' />
 
+<script src="EventLog.js"></script>
 <script src="World.js"></script>
 <script src="Squirrel.js"></script>
 <script src="GameController.js"></script>
-<script src="EventLog.js"></script>
 <script src="Random.js"></script>
 <script src="Nest.js"></script>
 <script src="StaticControllerHelper.js"></script>
 
 <script src="SquirrelController_LAF.js"></script>
 
-<script>
-var fps = 120;
-var squirrels = [];
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-var maxEnergy = 2500;
-var gameTime = 60*20;
-var controller;
-function initiate()
-{
-    StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
-}
-// test change to see if branching works as intended
-</script>
 <div id="gameArea">
     <div id="titleArea">
     	<h1>Eichh&ouml;rnchen Battle Royal</h1>
@@ -45,8 +31,25 @@ function initiate()
     </div>
 </div>
 <div id="eventLog">
-
+    <div class="eventLogEntry">The game cannot load with uBlock Origin enabled because it blocks the "EventLog.js" for some reason. i promise there aren't any ads on this page, so please just disable it until i found a fix for this</div>
 </div>
 </div>
 <img id="sourceImage" src="SquirrelMap1.png" onload="initiate()"></img>
 <canvas id="canvas"></canvas>
+
+<script>
+var fps = 120;
+var squirrels = [];
+squirrels.push(new SquirrelController_LAF());
+squirrels.push(new SquirrelController_LAF());
+squirrels.push(new SquirrelController_LAF());
+squirrels.push(new SquirrelController_LAF());
+var maxEnergy = 2500;
+var gameTime = 60*20;
+var controller;
+function initiate()
+{
+    StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
+}
+// test change to see if branching works as intended
+</script>

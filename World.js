@@ -76,7 +76,6 @@ class World {
             case "255-51-102":
                 return "isNest";  
             default:
-                console.log(string);
                 return "isGrass";                                                            
         }
     }
