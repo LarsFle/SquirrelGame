@@ -14,7 +14,10 @@ class SquirrelController_LAF extends Squirrel {
 
     run(time = 0)
     {
-        console.log("LAF is thinking");
+        if (SquirrelbotDebugging)
+        {
+            console.log("LAF is thinking");
+        }
         this.#view = this.getView();
         this.#cx = this.getX();
         this.#cy = this.getY();
@@ -24,7 +27,10 @@ class SquirrelController_LAF extends Squirrel {
                 this.#scoutingAI();
                 break;
         }
-        console.log("LAF was thinking for: ", Date.now()-time);
+        if (SquirrelbotDebugging)
+        {
+            console.log("LAF was thinking for: ", Date.now()-time);
+        }
     }
 
     #scoutingAI()

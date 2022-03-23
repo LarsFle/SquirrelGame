@@ -58,7 +58,7 @@ class GameController {
         }
         if (this.#gameTime === 60)
         {
-            EventLog.log("Die Eichhörnchen haben noch eine Minute!.", "#ff0000");
+            EventLog.log("Die Eichhï¿½rnchen haben noch eine Minute!.", "#ff0000");
         }
         if (this.#running)
         {
@@ -167,9 +167,9 @@ class GameController {
             }
             squirrel.setNuts(newNuts);
         });
-        EventLog.log(squirrel1.getName()+" hat um Nüsse gekämpft. Jeder kehrt mit " + 
-                                            (nutGain + (nutGain === 1) ? " Nuss" : " Nüssen") + "zurück! " + 
-                                            (bonusNut > 0 ? "( + " + (bonusNut + (bonusNut === 1) ? " Bonuss" : " Bonüsse") : ""),
+        EventLog.log(squirrel1.getName()+" hat um Nï¿½sse gekï¿½mpft. Jeder kehrt mit " + 
+                                            (nutGain + (nutGain === 1) ? " Nuss" : " Nï¿½ssen") + "zurï¿½ck! " + 
+                                            (bonusNut > 0 ? "( + " + (bonusNut + (bonusNut === 1) ? " Bonuss" : " Bonï¿½sse") : ""),
                      "#333333");
 
     }
@@ -186,7 +186,10 @@ class GameController {
         clearInterval(this.#gameLoop);
         let startTime = Date.now();
         this.#gameLoop = setInterval(function() {
-            console.log("ms since last loop: ",Date.now()-startTime);
+            if (timeDebugging)
+            {
+                console.log("ms since last loop: ",Date.now()-startTime);
+            }
             startTime = Date.now();
             StaticControllerHelper.runLogicTick(startTime);
         }, this.#gameSpeed);
@@ -217,7 +220,10 @@ class GameController {
         }
         this.#world.runLogicTick(this, start);
         let time2 = Date.now()-start;
-        console.log("GameController.runLogicTick() took ", time2, " ms");
-        console.log("gameSpeed: ", this.#gameSpeed);
+        if (timeDebugging)
+        {
+            console.log("GameController.runLogicTick() took ", time2, " ms");
+            console.log("gameSpeed: ", this.#gameSpeed);
+        }
     }
 }
