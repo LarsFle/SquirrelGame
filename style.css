@@ -86,7 +86,7 @@ body
 {
 	color:#e0e01a
 }
-.highScore
+.deadScore
 {
 	color:#b6b6b6
 }
@@ -129,6 +129,7 @@ body
 #scoreBoard
 {
 	height:156px;
+	overflow:auto;
 }
 .isTree
 {
