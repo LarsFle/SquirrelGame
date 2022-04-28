@@ -37,6 +37,7 @@ class Squirrel {
     getDirection() { return this.#direction;}
     getAction() { return this.#action;}
     
+    resetCurrentSpeedPoint() { this.#currentSpeedPoint = 0;}
     getNuts() {return this.#nuts;}
     setNuts(nut) { console.log(nut + " nuts set"); this.#nuts = (isNaN(nut)) ? 0 : nut;}
     getName() {return this.#name;}
