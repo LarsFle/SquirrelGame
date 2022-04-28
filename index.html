@@ -34,18 +34,19 @@
     <div class="eventLogEntry">The game cannot load with uBlock Origin enabled because it blocks the "EventLog.js" for some reason. i promise there aren't any ads on this page, so please just disable it until i found a fix for this</div>
 </div>
 </div>
-<img id="sourceImage" src="SquirrelMap1.png" onload="initiate()"></img>
+<img id="sourceImage" src="SquirrelMap2.png" onload="initiate()"></img>
 <canvas id="canvas"></canvas>
 
 <script>
 var timeDebugging = false;
 var SquirrelbotDebugging = false;
-var fps = 120;
+var fps = 500;
 var squirrels = [];
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
+squirrels.push(new SquirrelController_LAF("LAF"));
+squirrels.push(new SquirrelController_LAF("Larame"));
+squirrels.push(new SquirrelController_LAF("Lars"));
+squirrels.push(new SquirrelController_LAF("Larry"));
+
 var maxEnergy = 2500;
 var gameTime = 60*20;
 var controller;

@@ -28,9 +28,13 @@ class World {
         playTable.height = img.height*5;
         
         this.#cellArray = new Array(height);
+        this.#cellArrayOrigin = new Array(height);
+        
         for (var i = 0; i < this.#cellArray.length; i++) 
         {
             this.#cellArray[i] = new Array();
+            this.#cellArrayOrigin[i] = new Array();
+            
         }
         for(var y=0; y < height ; y++)
         {
@@ -49,12 +53,14 @@ class World {
                 {
                     this.#trees.push({"x":x, "y":y});
                 }
-                this.#cellArray[x].push(newTd);
+                this.#cellArray[y].push(newTd);
+                this.#cellArrayOrigin[y].push(newClass);
+                
                 newTr.appendChild(newTd);
             }
             playTable.appendChild(newTr);
         }
-        this.#cellArrayOrigin = this.#cellArray;
+        //this.#cellArrayOrigin = this.#cellArray;
     }
     getWidth() { return this.#width;}
     getHeight() { return this.#height;}
@@ -84,17 +90,17 @@ class World {
 
     getFieldClass(x,y)
     {
-        return this.#cellArray[x][y].className;
+        return this.#cellArray[y][x].className;
     }
 
     collectNut(x,y)
     {
-        this.#cellArray[x][y].className = this.#cellArrayOrigin[x][y].className;
+        this.#cellArray[y][x].className = this.#cellArrayOrigin[y][x];
     }
 
     getFieldSpeedModifier(x,y)
     {
-        switch(this.#cellArray[x][y].className)
+        switch(this.#cellArray[y][x].className)
         {
             case "isBush":
                 return 2;
@@ -103,6 +109,7 @@ class World {
             default:
                 return 1;
         }
+        return 1;
     }
     
     getViewForSquirrel(squirrel, squirrels, range)
@@ -129,8 +136,12 @@ class World {
                     }
                     if (check)
                     {
-                        view_x.push(this.#cellArray[x][y].className);
+                        view_x.push(this.#cellArray[y][x].className);
                     }
+                }
+                else
+                {
+                    view_x.push("isVoid");
                 }
             }
             view.push(view_x);  
@@ -143,17 +154,18 @@ class World {
         let time1 = Date.now()-time;
         for (var cell of controller.getToUpdate())
         {
-            this.#cellArray[cell.x][cell.y].removeAttribute("style");
-            this.#cellArray[cell.x][cell.y].className = this.#cellArrayOrigin[cell.x][cell.y].className;
+            this.#cellArray[cell.y][cell.x].removeAttribute("style");
+            this.#cellArray[cell.y][cell.x].className = this.#cellArrayOrigin[cell.y][cell.x];
         }
+        controller.resetToUpdate();
         let time2 = Date.now()-time;
         for (var squirrel of controller.getSquirrels())
         {
             let cx = squirrel.getX();
             let cy = squirrel.getY();
-            this.#cellArray[cx][cy].setAttribute("style", "background:"+squirrel.getColor());
-            let newx = this.#cellArray[cx][cy].getBoundingClientRect().left + window.scrollX
-            let newy = this.#cellArray[cx][cy].getBoundingClientRect().top + window.scrollY
+            this.#cellArray[cy][cx].setAttribute("style", "background:"+squirrel.getColor());
+            let newx = this.#cellArray[cy][cx].getBoundingClientRect().left// + window.scrollX
+            let newy = this.#cellArray[cy][cx].getBoundingClientRect().top// + window.scrollY
             squirrel.nameplate.style.top = newy-15+"px";
             squirrel.nameplate.style.left = newx+5+"px";
             squirrel.nameplate.style.display = "block";
@@ -171,7 +183,7 @@ class World {
                 let newy = tree.y-halfNutRange+ry;
                 if (newx >= 0 && newx < this.#width && newy >= 0 && newy < this.#height)
                 {
-                    this.#cellArray[newx][newy].className = "isNut";
+                    this.#cellArray[newy][newx].className = "isNut";
                 }
                 else
                 {

@@ -57,6 +57,21 @@ class StaticControllerHelper {
         return this.#controller.runLogicTick(start);
     }
 
+    static getField(squirrel)
+    {
+        return this.#controller.getFieldClass(squirrel.getX(),squirrel.getY());
+    }
+
+    static getViewDistance()
+    {
+        return this.#controller.getViewDistance();
+    }
+
+    static store(squirrel)
+    {
+        return this.#controller.store(squirrel);
+    }
+
     static getViewForSquirrel(squirrel)
     {
         let squirrels = this.#controller.getSquirrels();

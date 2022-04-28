@@ -6,6 +6,7 @@ class GameController {
     #toUpdate = [];
     #world;
     #squirrels = [];
+    #squirrelData = [];
     #worldOrigin;
     #viewDistance;
     #nests;
@@ -29,6 +30,7 @@ class GameController {
         for (var squirrel of this.#squirrels)
         {
             squirrel.claimANest(this);
+            this.#squirrelData[squirrel.getName()] = {score: 0, nuts: 0, instance: squirrel};
         }
         this.#gameTime = gameTime;
         this.#timer = setInterval(function(that) {
@@ -39,10 +41,12 @@ class GameController {
 
     getNests(){ return this.#nests;}
     getToUpdate() {return this.#toUpdate;}
+    resetToUpdate() {this.#toUpdate = [];}
     getWidth() { return this.#world.getWidth();}
     getHeight() { return this.#world.getHeight();}
     getSquirrels() {return this.#squirrels;}
-    
+    getViewDistance() {return this.#viewDistance;}
+
     getRemainingTime()
     {
         return this.#gameTime;
@@ -81,15 +85,15 @@ class GameController {
         }
         let scoreboard = document.createElement("div");
         scoreboard.setAttribute("class", "scoreBoardList");
-        for (var squirrel of this.#squirrels)
+        for (var squirrel of this.#squirrelData)
         {
             let scoreEntry = document.createElement("div");
             let scoreName = document.createElement("span");
             scoreName.setAttribute("class", "scoreName");
-            scoreName.innerHTML = squirrel.getName();
+            scoreName.innerHTML = squirrel.instance.getName();
             let score = document.createElement("span");
             score.setAttribute("class", "scorePoints");
-            score.innerHTML = squirrel.getScore();
+            score.innerHTML = squirrel.score;
             scoreEntry.appendChild(scoreName);
             scoreEntry.appendChild(score);
             scoreboard.appendChild(scoreEntry);
@@ -128,9 +132,25 @@ class GameController {
         if (this.getFieldClass(squirrel.getX(),squirrel.getY()) === "isNut")
         {
             this.#world.collectNut(squirrel.getX(),squirrel.getY());
+            this.#squirrelData[squirrel.getName()].nuts += 1;
             return 1; 
         }
         return 0;
+    }
+
+    store(squirrel)
+    {
+        let nest = squirrel.getNest();
+        let x = squirrel.getX();
+        let y = squirrel.getY();
+        let nuts = this.#squirrelData[squirrel.getName()].nuts;
+        if (x === nest.getX() && y === nest.getY() && nuts > 0)
+        {
+            this.#squirrelData[squirrel.getName()].score += nuts;
+            EventLog.log(squirrel.getName()+" hat " + nuts + ((nuts === 1) ? " Nuss" : " N&uuml;sse") + " eingelagert!", "#ffff00");
+            this.#squirrelData[squirrel.getName()].nuts = 0;
+        }
+        return;
     }
 
     challenge(squirrel1)
@@ -141,37 +161,46 @@ class GameController {
         let highestNutYet = 0;
         let highestNutYetSquirrel;
         let bonusNut = 0;
-        this.#squirrels.forEach(squirrel2 => function (){
-            if (squirrel1.getX() >= squirrel2.getX()-1 &&
-                squirrel1.getX() <= squirrel2.getX()+1 &&
-                squirrel1.getY() >= squirrel2.getY()-1 &&
-                squirrel1.getY() <= squirrel2.getY()+1 
-                )
+        let sqd = this.#squirrelData;
+        let challengerNut = 0;
+        for(var squirrel2 in sqd)
+        {
+            if (squirrel1.getX() >= this.#squirrelData[squirrel2].instance.getX()-1 &&
+            squirrel1.getX() <= this.#squirrelData[squirrel2].instance.getX()+1 &&
+            squirrel1.getY() >= this.#squirrelData[squirrel2].instance.getY()-1 &&
+            squirrel1.getY() <= this.#squirrelData[squirrel2].instance.getY()+1 
+            )
             {
-                totalNuts += squirrel2.getNuts();
+                totalNuts += this.#squirrelData[squirrel2].nuts;
                 listOfSquirrels.push(squirrel2);
-                if (squirrel2.getNuts() > highestNutYet)
+                if (this.#squirrelData[squirrel2].nuts > highestNutYet)
                 {
-                    highestNutYet = squirrel2.getNuts();
-                    highestNutYetSquirrel = squirrel2;
+                    highestNutYet = this.#squirrelData[squirrel2].nuts;
+                    highestNutYetSquirrel = this.#squirrelData[squirrel2];
                 }
             }
-        });
+        }
         bonusNut = totalNuts % listOfSquirrels.length;
         nutGain = (totalNuts-bonusNut) / listOfSquirrels.length;
-        listOfSquirrels.forEach(squirrel => function (){
+        for(var squirrel of listOfSquirrels)
+        {
             let newNuts = nutGain;
             if (bonusNut !== 0 && highestNutYetSquirrel == squirrel)
             {
                 newNuts += bonusNut;
             }
-            squirrel.setNuts(newNuts);
-        });
-        EventLog.log(squirrel1.getName()+" hat um N�sse gek�mpft. Jeder kehrt mit " + 
-                                            (nutGain + (nutGain === 1) ? " Nuss" : " N�ssen") + "zur�ck! " + 
-                                            (bonusNut > 0 ? "( + " + (bonusNut + (bonusNut === 1) ? " Bonuss" : " Bon�sse") : ""),
+            this.#squirrelData[squirrel].nuts = newNuts;
+            this.#squirrelData[squirrel].instance.setNuts(newNuts);
+            if (squirrel === squirrel1.getName())
+            {
+                challengerNut = newNuts;
+            }
+        }
+        EventLog.log(squirrel1.getName()+" hat um N&uuml;sse gek&auml;mpft. Jeder kehrt mit " + 
+                                            nutGain + ((nutGain === 1) ? " Nuss" : " N&uuml;ssen") + " zur&uuml;ck! " + 
+                                            ((bonusNut > 0) ? ("( + " + bonusNut + ((bonusNut === 1) ? " Bonuss)" : " Bon&uuml;sse)")) : ""),
                      "#333333");
-
+        return challengerNut;
     }
 
     getViewForSquirrel(squirrel, squirrels)
