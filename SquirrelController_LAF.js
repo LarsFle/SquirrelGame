@@ -6,6 +6,8 @@ class SquirrelController_LAF extends Squirrel {
     #goal_x;
     #goal_y;
     #fightCD = 15;
+    #energyThreshold = 0.2;
+    #energyThresholdNest = 0.5;
     #cx;
     #cy;
     #oldnut=0;
@@ -25,10 +27,7 @@ class SquirrelController_LAF extends Squirrel {
         this.#cy = this.getY();
         let r = this.getViewDistance();
         this.#fightCooldown++;
-        if (this.#cx == this.#goal_x && this.#cy == this.#goal_y)
-        {
-           this.#mode = "scouting";
-        }
+        this.#mode = "scouting";
         if (this.getNuts() > 8)
         {
             this.#mode = "returnToNest";
@@ -37,12 +36,23 @@ class SquirrelController_LAF extends Squirrel {
         }
         if (this.getNuts() > 0 && this.#cx == this.getNest().getX() && this.#cy == this.getNest().getY())
         {
-            this.#mode = "storeNuts";
+            if (this.getEnergy() < StaticControllerHelper.getMaxEnergy()*this.#energyThresholdNest)
+            {
+                this.#mode = "eat";
+            }
+            else
+            {
+                this.#mode = "storeNuts";
+            }
         }
         if (this.getLastActionPerformed() == "challenge")
         {
             this.#fightCooldown = 0;
             this.#mode = "scouting";
+        }
+        if (this.getEnergy() < StaticControllerHelper.getMaxEnergy()*this.#energyThreshold)
+        {
+            this.#mode = "eat";
         }
         if (this.getNuts() <= 1 && this.#fightCooldown >= this.#fightCD && this.#cx > 1 && this.#cx < this.#gameSize.x -1 && this.#cy > 1 && this.#cy < this.#gameSize.y -1)
         {
@@ -89,6 +99,10 @@ class SquirrelController_LAF extends Squirrel {
                     this.#mode = "scouting";
                 }
                 break;
+            
+            case "eat":
+                this.setAction("eat");
+                break;
 
         }
         this.#tryCollectNut();
@@ -113,7 +127,6 @@ class SquirrelController_LAF extends Squirrel {
             row.forEach((pos, x) => {
                 if(pos === "isNut")
                 {
-                    console.log("LAF sees Nut");
                     this.#goal_x = this.#cx-this.getViewDistance()+x;
                     this.#goal_y = this.#cy-this.getViewDistance()+y;
                     this.#mode = "goingToNut";

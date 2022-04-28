@@ -62,6 +62,11 @@ class StaticControllerHelper {
         return this.#controller.getFieldClass(squirrel.getX(),squirrel.getY());
     }
 
+    static getNutsOfSquirrel(squirrel)
+    {
+        return this.#controller.getNutsOfSquirrel(squirrel);
+    }
+
     static getViewDistance()
     {
         return this.#controller.getViewDistance();

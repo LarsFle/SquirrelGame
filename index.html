@@ -40,18 +40,20 @@
 <script>
 var timeDebugging = false;
 var SquirrelbotDebugging = false;
-var fps = 500;
-var squirrels = [];
-squirrels.push(new SquirrelController_LAF("LAF"));
-squirrels.push(new SquirrelController_LAF("Larame"));
-squirrels.push(new SquirrelController_LAF("Lars"));
-squirrels.push(new SquirrelController_LAF("Larry"));
+var fps = 120;
+/*
 
-var maxEnergy = 2500;
+*/
+var maxEnergy = 250;
 var gameTime = 60*20;
 var controller;
 function initiate()
-{
+{   
+    var squirrels = [];
+    squirrels.push(new SquirrelController_LAF("LAF"));
+    squirrels.push(new SquirrelController_LAF("Larame"));
+    squirrels.push(new SquirrelController_LAF("Lars"));
+    squirrels.push(new SquirrelController_LAF("Larry"));
     StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
 }
 // test change to see if branching works as intended

@@ -30,7 +30,7 @@ class GameController {
         for (var squirrel of this.#squirrels)
         {
             squirrel.claimANest(this);
-            this.#squirrelData[squirrel.getName()] = {score: 0, nuts: 0, instance: squirrel};
+            this.#squirrelData[squirrel.getName()] = {score: 0, nuts: 0, instance: squirrel, status:"alive"};
         }
         this.#gameTime = gameTime;
         this.#timer = setInterval(function(that) {
@@ -70,7 +70,10 @@ class GameController {
             this.updateScoreBoard();
         }
     }
-
+    getNutsOfSquirrel(squirrel)
+    {
+        return this.#squirrelData[squirrel.getName()].nuts;
+    }
     updateScoreBoard()
     {
         let timer = document.createElement("div");
@@ -109,6 +112,11 @@ class GameController {
             {
                 score.setAttribute("class", "scorePoints");
                 scoreName.setAttribute("class", "scoreName");
+            }
+            if (this.#squirrelData[squirrel].status === "dead")
+            {
+                score.setAttribute("class", "scorePoints deadScore"); 
+                scoreName.setAttribute("class", "scoreName deadScore");
             }
             score.innerHTML = this.#squirrelData[squirrel].score;
             scoreEntry.appendChild(scoreName);
@@ -259,8 +267,13 @@ class GameController {
     {
         for (var squirrel of this.#squirrels)
         {
-                if (squirrel.runLogicTick())
+                let ret = squirrel.runLogicTick();
+                if (ret)
                 {
+                    if(ret == "dead")
+                    {
+                        this.#squirrelData[squirrel.getName()].status = "dead";
+                    }
                     squirrel.run(start);
                 }
         }

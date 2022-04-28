@@ -120,7 +120,7 @@ class Squirrel {
 
     #eat()
     {
-        if (this.#nuts > 0)
+        if (StaticControllerHelper.getNutsOfSquirrel(this) > 0 && this.#nuts > 0)
         {
             this.#energy = StaticControllerHelper.getMaxEnergy();
             this.#nuts -= 1;
@@ -189,6 +189,7 @@ class Squirrel {
         {
             EventLog.log(this.#name+" ist verhungert. Jammerschade...", "#ff0000");
             this.#color = "#666666";
+            ret = "dead";
         }
         return ret;
     }
