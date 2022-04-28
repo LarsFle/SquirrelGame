@@ -12,6 +12,7 @@ class Squirrel {
     #score = 0;
     #speed = 20;
     #currentSpeedPoint = 0;
+    #lastActionPerformed;
     nameplate;
     #name;
     #color;
@@ -36,11 +37,13 @@ class Squirrel {
     getDirection() { return this.#direction;}
     getAction() { return this.#action;}
     
+    resetCurrentSpeedPoint() { this.#currentSpeedPoint = 0;}
     getNuts() {return this.#nuts;}
-    setNuts(nut) { this.#nuts = nut;}
+    setNuts(nut) { console.log(nut + " nuts set"); this.#nuts = (isNaN(nut)) ? 0 : nut;}
     getName() {return this.#name;}
     getView() {return this.#view;}
 
+    getLastActionPerformed() {return this.#lastActionPerformed;}
     getColor() {return this.#color;}
     getNest() {return this.#nest;}
     getScore() {return this.#score;}
@@ -97,10 +100,10 @@ class Squirrel {
 
     #store()
     {
-        if (this.#x === this.#nest.x && this.#y === this.#nest.y && this.#nuts > 0)
+        StaticControllerHelper.store(this);
+        if (this.#x === this.#nest.getX() && this.#y === this.#nest.getY() && this.#nuts > 0)
         {
             this.#score += this.#nuts;
-            EventLog.log(this.#name+" hat " + (this.#nuts + (this.#nuts === 1) ? " Nuss" : " Nüsse") + "eingelagert!", "#ffff00");
             this.#nuts = 0;
         }
         return;
@@ -109,17 +112,31 @@ class Squirrel {
     #collect()
     {
         this.#nuts += StaticControllerHelper.collect(this);
+        if (SquirrelbotDebugging)
+        {
+            console.log(this.#name+" has collected a nut");
+        }
         return;
     }
 
     #eat()
     {
-        if (this.#nuts > 0)
+        if (StaticControllerHelper.getNutsOfSquirrel(this) > 0 && this.#nuts > 0)
         {
             this.#energy = StaticControllerHelper.getMaxEnergy();
             this.#nuts -= 1;
             EventLog.log(this.#name+" hat eine Nuss gegessen", "#f0f0f0");
         }
+    }
+
+    getCurrentField()
+    {
+        return StaticControllerHelper.getField(this);
+    }
+    
+    getViewDistance()
+    {
+        return StaticControllerHelper.getViewDistance();
     }
 
     getCurrentSpeed()
@@ -164,6 +181,7 @@ class Squirrel {
                     this.#eat();
                     break;
             }
+            this.#lastActionPerformed = this.#action;
             this.#currentSpeedPoint = 0;
             this.#view = StaticControllerHelper.getViewForSquirrel(this);
             ret = true;
@@ -172,6 +190,7 @@ class Squirrel {
         {
             EventLog.log(this.#name+" ist verhungert. Jammerschade...", "#ff0000");
             this.#color = "#666666";
+            ret = "dead";
         }
         return ret;
     }

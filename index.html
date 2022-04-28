@@ -34,27 +34,32 @@
     <div class="eventLogEntry">The game cannot load with uBlock Origin enabled because it blocks the "EventLog.js" for some reason. i promise there aren't any ads on this page, so please just disable it until i found a fix for this</div>
 </div>
 </div>
-<img id="sourceImage" src="SquirrelMap1.png" onload="initiate()"></img>
+<img id="sourceImage" src="Forest_128.png" onload="initiate()"></img>
 <canvas id="canvas"></canvas>
 
 <script>
 var timeDebugging = false;
 var SquirrelbotDebugging = false;
 var fps = 120;
-var squirrels = [];
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-squirrels.push(new SquirrelController_LAF());
-var maxEnergy = 2500;
+/*
+
+*/
+var maxEnergy = 150;
 var gameTime = 60*20;
 var controller;
 function initiate()
-{
+{   
+    var squirrels = [];
+    squirrels.push(new SquirrelController_LAF("Lasso"));
+    squirrels.push(new SquirrelController_LAF("Larame"));
+    squirrels.push(new SquirrelController_LAF("Lars"));
+    squirrels.push(new SquirrelController_LAF("Larry"));
+    squirrels.push(new SquirrelController_LAF("Lasagne"));
+    squirrels.push(new SquirrelController_LAF("Lachs"));
+    squirrels.push(new SquirrelController_LAF("Landratsamt"));
+    squirrels.push(new SquirrelController_LAF("Larissa"));
+    squirrels.push(new SquirrelController_LAF("Lacrose"));
+    squirrels.push(new SquirrelController_LAF("Laktose"));
     StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
 }
 // test change to see if branching works as intended
