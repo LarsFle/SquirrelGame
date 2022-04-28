@@ -158,6 +158,7 @@ class GameController {
         {
             this.#world.collectNut(squirrel.getX(),squirrel.getY());
             this.#squirrelData[squirrel.getName()].nuts += 1;
+            this.#squirrelData[squirrel.getName()].instance.resetCurrentSpeedPoint();
             return 1; 
         }
         return 0;
@@ -174,6 +175,7 @@ class GameController {
             this.#squirrelData[squirrel.getName()].score += nuts;
             EventLog.log(squirrel.getName()+" hat " + nuts + ((nuts === 1) ? " Nuss" : " N&uuml;sse") + " eingelagert!", "#ffff00");
             this.#squirrelData[squirrel.getName()].nuts = 0;
+            this.#squirrelData[squirrel.getName()].instance.resetCurrentSpeedPoint();
         }
         return;
     }
@@ -225,6 +227,8 @@ class GameController {
                                             nutGain + ((nutGain === 1) ? " Nuss" : " N&uuml;ssen") + " zur&uuml;ck! " + 
                                             ((bonusNut > 0) ? ("( + " + bonusNut + ((bonusNut === 1) ? " Bonuss)" : " Bon&uuml;sse)")) : ""),
                      "#333333");
+        
+        squirrel1.resetCurrentSpeedPoint();
         return challengerNut;
     }
 

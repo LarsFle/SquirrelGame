@@ -21,6 +21,7 @@ class SquirrelController_LAF extends Squirrel {
 
     run(time = 0)
     {
+        
         this.#gameSize = {x: StaticControllerHelper.getWidth(), y: StaticControllerHelper.getHeight()};
         this.#view = this.getView();
         this.#cx = this.getX();
@@ -111,6 +112,7 @@ class SquirrelController_LAF extends Squirrel {
             console.log("LAF was thinking for: ", Date.now()-time);
         }
         this.#oldnut = this.getNuts();
+        StaticControllerHelper.
     }
 
     #tryCollectNut()
