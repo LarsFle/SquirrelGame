@@ -13,6 +13,6 @@ class EventLog {
         log.setAttribute("class", "eventLogEntry");
         log.style.background = color;
         log.innerHTML = message;
-        document.getElementById("eventLog").insertBefore(log, EventLog.#lastLog);
+        document.getElementById("eventLog").insertBefore(log, document.getElementById("eventLog").childNodes[0]);
     }
 }

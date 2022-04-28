@@ -55,9 +55,9 @@ body
 	margin:0 auto;
 	width:100%;
 	text-align:center;
-	grid-template-areas:'titleArea titleArea' 'gameArea scoreBoard' 'gameArea eventArea';
-	grid-template-columns: calc(100% - 450px) 400px; 
-	grid-template-rows: 56px 250px calc(100% - 320px);
+	grid-template-areas:'gameArea titleArea' 'gameArea scoreBoard' 'gameArea eventArea';
+	grid-template-columns: auto 400px; 
+	grid-template-rows: 100px 200px calc(100% - 320px);
 	display:grid;	
 	
 }
@@ -66,19 +66,33 @@ body
 {
 	grid-area:scoreBoard;
 	display:grid-item;
-	text-align:left;
-	width:400px;
-	height:250px;
+	width:100%;
+}
+.scoreBoardList
+{
+	width:100%;
+	border-spacing: 0px;
+
 }
 .scorePoints
 {
- 	text-align: right;
-	 float:right;
+ 	text-align: left;
+	font-size:20px;
+	font-weight:600;
+	width:50%;
+	padding-left:10px;
 }
-
+.highScore
+{
+	color:#e0e01a
+}
 .scoreName
 {
-	text-align: left;
+	text-align: right;
+	font-size:20px;
+	font-weight:600;
+	width:50%;
+	padding-right:10px;
 }
 
 .gameTimer
@@ -94,7 +108,7 @@ body
 	display:grid-item;
 	text-align:left;
 	width:400px;
-	height:100%;
+	max-height:400px;
 	overflow-y: auto;
 }
 #eventLog div

@@ -83,17 +83,34 @@ class GameController {
         {
             timer.innerHTML = "<span style='color:#ff00000'>00:00</span>";
         }
-        let scoreboard = document.createElement("div");
+        let scoreboard = document.createElement("table");
         scoreboard.setAttribute("class", "scoreBoardList");
-        for (var squirrel of this.#squirrelData)
+        let highestScore = 0;
+        for (var squirrel in this.#squirrelData)
         {
-            let scoreEntry = document.createElement("div");
-            let scoreName = document.createElement("span");
+            if (this.#squirrelData[squirrel].score > highestScore)
+            {
+                  highestScore = this.#squirrelData[squirrel].score; 
+            }
+        }
+        for (var squirrel in this.#squirrelData)
+        {
+            let scoreEntry = document.createElement("tr");
+            let scoreName = document.createElement("td");
             scoreName.setAttribute("class", "scoreName");
-            scoreName.innerHTML = squirrel.instance.getName();
-            let score = document.createElement("span");
-            score.setAttribute("class", "scorePoints");
-            score.innerHTML = squirrel.score;
+            scoreName.innerHTML = this.#squirrelData[squirrel].instance.getName();
+            let score = document.createElement("td");
+            if (this.#squirrelData[squirrel].score === highestScore && highestScore > 0)
+            {
+                score.setAttribute("class", "scorePoints highScore"); 
+                scoreName.setAttribute("class", "scoreName highScore");
+            }
+            else
+            {
+                score.setAttribute("class", "scorePoints");
+                scoreName.setAttribute("class", "scoreName");
+            }
+            score.innerHTML = this.#squirrelData[squirrel].score;
             scoreEntry.appendChild(scoreName);
             scoreEntry.appendChild(score);
             scoreboard.appendChild(scoreEntry);
