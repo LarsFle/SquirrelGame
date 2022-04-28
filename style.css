@@ -126,6 +126,10 @@ body
 	margin:10px auto;
 	width:170px;	
 }
+#scoreBoard
+{
+	height:156px;
+}
 .isTree
 {
 	background:#00FF00;
