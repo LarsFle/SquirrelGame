@@ -30,7 +30,7 @@ class GameController {
         for (var squirrel of this.#squirrels)
         {
             squirrel.claimANest(this);
-            this.#squirrelData[squirrel.getName()] = {score: 0, nuts: 0, instance: squirrel, status:"alive"};
+            this.#squirrelData[squirrel.getName()] = {score: Random.r(40), nuts: 0, instance: squirrel, status:"alive"};
         }
         this.#gameTime = gameTime;
         this.#timer = setInterval(function(that) {
@@ -96,7 +96,13 @@ class GameController {
                   highestScore = this.#squirrelData[squirrel].score; 
             }
         }
-        for (var squirrel in this.#squirrelData)
+        let sq = [];
+        let sqd = Object.entries(this.#squirrelData);
+        sqd.sort((a,b) => { return b[1].score - a[1].score});
+        sqd.forEach((x) => {
+            sq[x[0]] = x[1];
+        })
+        for (var squirrel in sq)
         {
             let scoreEntry = document.createElement("tr");
             let scoreName = document.createElement("td");
