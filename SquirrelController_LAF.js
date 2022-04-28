@@ -112,7 +112,6 @@ class SquirrelController_LAF extends Squirrel {
             console.log("LAF was thinking for: ", Date.now()-time);
         }
         this.#oldnut = this.getNuts();
-        StaticControllerHelper.
     }
 
     #tryCollectNut()
