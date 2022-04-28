@@ -30,7 +30,7 @@ class GameController {
         for (var squirrel of this.#squirrels)
         {
             squirrel.claimANest(this);
-            this.#squirrelData[squirrel.getName()] = {score: Random.r(40), nuts: 0, instance: squirrel, status:"alive"};
+            this.#squirrelData[squirrel.getName()] = {score: 0, nuts: 0, instance: squirrel, status:"alive"};
         }
         this.#gameTime = gameTime;
         this.#timer = setInterval(function(that) {
