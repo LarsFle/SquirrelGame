@@ -143,9 +143,9 @@ class GameController {
     {
         this.#nests.pop();
     }
-    getFieldSpeedModifier(x,y)
+    getFieldSpeedModifier(x,y,c)
     {
-        return this.#world.getFieldSpeedModifier(x,y);
+        return this.#world.getFieldSpeedModifier(x,y)*(Math.pow(1.1,this.#squirrelData[c.getName()].nuts));
     }
 
     addToUpdateList(x,y)

@@ -141,7 +141,7 @@ class Squirrel {
 
     getCurrentSpeed()
     {
-        return this.#speed*(Math.pow(1.1,this.#nuts))*StaticControllerHelper.getFieldSpeedModifier(this.#x,this.#y);
+        return this.#speed*StaticControllerHelper.getFieldSpeedModifier(this.#x,this.#y, this);
     }
     runLogicTick()
     {
