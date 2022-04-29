@@ -231,7 +231,7 @@ class GameController {
         }
         EventLog.log(squirrel1.getName()+Translation.getTranslation('fight1') + 
                                             nutGain + ((nutGain === 1) ? Translation.getTranslation('nut') : Translation.getTranslation('nuts')) + 
-                                            ((bonusNut > 0) ? ("( + " + bonusNut + ((bonusNut === 1) ? Translation.getTranslation('bonusNut') : Translation.getTranslation('bonusNuts'))) : ""),
+                                            ((bonusNut > 0) ? (" (+" + bonusNut + ((bonusNut === 1) ? Translation.getTranslation('bonusNut') : Translation.getTranslation('bonusNuts'))) : ""),
                      "#333333");
         
         squirrel1.resetCurrentSpeedPoint();
