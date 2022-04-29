@@ -1,7 +1,28 @@
 <!DOCTYPE html>
 
 <link rel='stylesheet' type='text/css' media='screen' href='style.css' />
-
+<script src="Translation.js"></script>
+<script onLoad="">
+    Translation.init("en-EN");
+    var blocker = setInterval(() =>
+        {
+            if (document.getElementById('uBlockDiv') != null)
+            {
+                document.getElementById('uBlockDiv').innerHTML=Translation.getTranslation('uBlock');
+                clearInterval(blocker);
+            }
+        },100
+    );
+    var titler = setInterval(() =>
+        {
+            if (document.getElementById('titleh') != null)
+            {
+                document.getElementById('titleh').innerHTML=Translation.getTranslation('title');
+                clearInterval(titler);
+            }
+        },100
+    );
+</script>
 <script src="EventLog.js"></script>
 <script src="World.js"></script>
 <script src="Squirrel.js"></script>
@@ -10,11 +31,11 @@
 <script src="Nest.js"></script>
 <script src="StaticControllerHelper.js"></script>
 
-<script src="SquirrelController_LAF.js"></script>
+<script src="SquirrelController_Demo.js"></script>
 
 <div id="gameArea">
     <div id="titleArea">
-    	<h1>Eichh&ouml;rnchen Battle Royal</h1>
+    	<h1 id="titleh"></h1>
     </div>
     <div id="playArea">
     	<table id="playTable"></table>
@@ -31,35 +52,31 @@
     </div>
 </div>
 <div id="eventLog">
-    <div class="eventLogEntry">The game cannot load with uBlock Origin enabled because it blocks the "EventLog.js" for some reason. i promise there aren't any ads on this page, so please just disable it until i found a fix for this</div>
+    <div class="eventLogEntry" id="uBlockDiv"></div>
 </div>
 </div>
-<img id="sourceImage" src="Forest_128.png" onload="initiate()"></img>
+<img id="sourceImage" src="maps/Forest_128.png" onload="initiate()"></img>
 <canvas id="canvas"></canvas>
 
 <script>
 var timeDebugging = false;
 var SquirrelbotDebugging = false;
+var targetPlayerCount = 10;
 var fps = 120;
 /*
 
 */
 var maxEnergy = 150;
-var gameTime = 60*20;
+var gameTime = 60*3;
 var controller;
 function initiate()
 {   
     var squirrels = [];
-    squirrels.push(new SquirrelController_LAF("Lasso"));
-    squirrels.push(new SquirrelController_LAF("Larame"));
-    squirrels.push(new SquirrelController_LAF("Lars"));
-    squirrels.push(new SquirrelController_LAF("Larry"));
-    squirrels.push(new SquirrelController_LAF("Lasagne"));
-    squirrels.push(new SquirrelController_LAF("Lachs"));
-    squirrels.push(new SquirrelController_LAF("Landratsamt"));
-    squirrels.push(new SquirrelController_LAF("Larissa"));
-    squirrels.push(new SquirrelController_LAF("Lacrose"));
-    squirrels.push(new SquirrelController_LAF("Laktose"));
+    squirrels.push(new SquirrelController_Demo("Larame"));
+    while(squirrels.length < targetPlayerCount)
+    {
+        squirrels.push(new SquirrelController_Demo(Translation.getFillerName()));
+    }
     StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
 }
 // test change to see if branching works as intended

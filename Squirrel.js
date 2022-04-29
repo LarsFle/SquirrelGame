@@ -125,7 +125,7 @@ class Squirrel {
         {
             this.#energy = StaticControllerHelper.getMaxEnergy();
             this.#nuts -= 1;
-            EventLog.log(this.#name+" hat eine Nuss gegessen", "#f0f0f0");
+            EventLog.log(this.#name+Translation.getTranslation('eat'), "#f0f0f0");
         }
     }
 
@@ -141,7 +141,7 @@ class Squirrel {
 
     getCurrentSpeed()
     {
-        return this.#speed*(Math.pow(1.1,this.#nuts))*StaticControllerHelper.getFieldSpeedModifier(this.#x,this.#y);
+        return this.#speed*StaticControllerHelper.getFieldSpeedModifier(this.#x,this.#y, this);
     }
     runLogicTick()
     {
@@ -188,7 +188,7 @@ class Squirrel {
         }
         if (this.#energy <= 0)
         {
-            EventLog.log(this.#name+" ist verhungert. Jammerschade...", "#ff0000");
+            EventLog.log(this.#name+Translation.getTranslation('starved'), "#ff0000");
             this.#color = "#666666";
             ret = "dead";
         }

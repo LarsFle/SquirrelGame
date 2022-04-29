@@ -12,9 +12,9 @@ class StaticControllerHelper {
         return this.#controller.getRemainingTime();
     }
 
-    static getFieldSpeedModifier(x,y)
+    static getFieldSpeedModifier(x,y, c)
     {
-        return this.#controller.getFieldSpeedModifier(x,y);
+        return this.#controller.getFieldSpeedModifier(x,y, c);
     }
 
     static getMaxEnergy()

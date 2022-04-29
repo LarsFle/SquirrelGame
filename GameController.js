@@ -30,7 +30,7 @@ class GameController {
         for (var squirrel of this.#squirrels)
         {
             squirrel.claimANest(this);
-            this.#squirrelData[squirrel.getName()] = {score: Random.r(40), nuts: 0, instance: squirrel, status:"alive"};
+            this.#squirrelData[squirrel.getName()] = {score: 0, nuts: 0, instance: squirrel, status:"alive"};
         }
         this.#gameTime = gameTime;
         this.#timer = setInterval(function(that) {
@@ -58,11 +58,11 @@ class GameController {
         {
             clearInterval(this.#gameLoop);
             clearInterval(this.#timer);
-            EventLog.log("Die Zeit ist um.", "#ff0000");
+            EventLog.log(Translation.getTranslation('timerEnd'), "#ff0000");
         }
         if (this.#gameTime === 60)
         {
-            EventLog.log("Die Eichh�rnchen haben noch eine Minute!.", "#ff0000");
+            EventLog.log(Translation.getTranslation('timerWarning'), "#ff0000");
         }
         if (this.#running)
         {
@@ -143,9 +143,9 @@ class GameController {
     {
         this.#nests.pop();
     }
-    getFieldSpeedModifier(x,y)
+    getFieldSpeedModifier(x,y,c)
     {
-        return this.#world.getFieldSpeedModifier(x,y);
+        return this.#world.getFieldSpeedModifier(x,y)*(Math.pow(1.1,this.#squirrelData[c.getName()].nuts));
     }
 
     addToUpdateList(x,y)
@@ -179,7 +179,7 @@ class GameController {
         if (x === nest.getX() && y === nest.getY() && nuts > 0)
         {
             this.#squirrelData[squirrel.getName()].score += nuts;
-            EventLog.log(squirrel.getName()+" hat " + nuts + ((nuts === 1) ? " Nuss" : " N&uuml;sse") + " eingelagert!", "#ffff00");
+            EventLog.log(squirrel.getName()+Translation.getTranslation('stored1') + nuts + ((nuts === 1) ? Translation.getTranslation('nut') : Translation.getTranslation('nuts')) + Translation.getTranslation('stored2'), "#ffff00");
             this.#squirrelData[squirrel.getName()].nuts = 0;
             this.#squirrelData[squirrel.getName()].instance.resetCurrentSpeedPoint();
         }
@@ -229,9 +229,9 @@ class GameController {
                 challengerNut = newNuts;
             }
         }
-        EventLog.log(squirrel1.getName()+" hat um N&uuml;sse gek&auml;mpft. Jeder kehrt mit " + 
-                                            nutGain + ((nutGain === 1) ? " Nuss" : " N&uuml;ssen") + " zur&uuml;ck! " + 
-                                            ((bonusNut > 0) ? ("( + " + bonusNut + ((bonusNut === 1) ? " Bonuss)" : " Bon&uuml;sse)")) : ""),
+        EventLog.log(squirrel1.getName()+Translation.getTranslation('fight1') + 
+                                            nutGain + ((nutGain === 1) ? Translation.getTranslation('nut') : Translation.getTranslation('nuts')) + 
+                                            ((bonusNut > 0) ? (" (+" + bonusNut + ((bonusNut === 1) ? Translation.getTranslation('bonusNut') : Translation.getTranslation('bonusNuts'))) : ""),
                      "#333333");
         
         squirrel1.resetCurrentSpeedPoint();
