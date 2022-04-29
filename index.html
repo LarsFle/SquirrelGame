@@ -31,7 +31,7 @@
 <script src="Nest.js"></script>
 <script src="StaticControllerHelper.js"></script>
 
-<script src="SquirrelController_LAF.js"></script>
+<script src="SquirrelController_Demo.js"></script>
 
 <div id="gameArea">
     <div id="titleArea">
@@ -72,10 +72,10 @@ var controller;
 function initiate()
 {   
     var squirrels = [];
-    squirrels.push(new SquirrelController_LAF("Larame"));
+    squirrels.push(new SquirrelController_Demo("Larame"));
     while(squirrels.length < targetPlayerCount)
     {
-        squirrels.push(new SquirrelController_LAF(Translation.getFillerName()));
+        squirrels.push(new SquirrelController_Demo(Translation.getFillerName()));
     }
     StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
 }
