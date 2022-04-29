@@ -125,7 +125,7 @@ class Squirrel {
         {
             this.#energy = StaticControllerHelper.getMaxEnergy();
             this.#nuts -= 1;
-            EventLog.log(this.#name+" hat eine Nuss gegessen", "#f0f0f0");
+            EventLog.log(this.#name+Translation.getTranslation('eat'), "#f0f0f0");
         }
     }
 
@@ -188,7 +188,7 @@ class Squirrel {
         }
         if (this.#energy <= 0)
         {
-            EventLog.log(this.#name+" ist verhungert. Jammerschade...", "#ff0000");
+            EventLog.log(this.#name+Translation.getTranslation('starved'), "#ff0000");
             this.#color = "#666666";
             ret = "dead";
         }
