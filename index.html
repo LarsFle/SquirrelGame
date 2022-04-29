@@ -61,6 +61,7 @@
 <script>
 var timeDebugging = false;
 var SquirrelbotDebugging = false;
+var targetPlayerCount = 10;
 var fps = 120;
 /*
 
@@ -71,16 +72,11 @@ var controller;
 function initiate()
 {   
     var squirrels = [];
-    squirrels.push(new SquirrelController_LAF("Lasso"));
     squirrels.push(new SquirrelController_LAF("Larame"));
-    squirrels.push(new SquirrelController_LAF("Lars"));
-    squirrels.push(new SquirrelController_LAF("Larry"));
-    squirrels.push(new SquirrelController_LAF("Lasagne"));
-    squirrels.push(new SquirrelController_LAF("Lachs"));
-    squirrels.push(new SquirrelController_LAF("Landratsamt"));
-    squirrels.push(new SquirrelController_LAF("Larissa"));
-    squirrels.push(new SquirrelController_LAF("Lacrose"));
-    squirrels.push(new SquirrelController_LAF("Laktose"));
+    while(squirrels.length < targetPlayerCount)
+    {
+        squirrels.push(new SquirrelController_LAF(Translation.getFillerName()));
+    }
     StaticControllerHelper.initiate(new GameController(squirrels, fps, maxEnergy, 15, gameTime));
 }
 // test change to see if branching works as intended

@@ -2,6 +2,7 @@
 
 class Translation {
     static #dictionary;
+    static #randomNames = [];
     static init(lang)
     {
         switch(lang)
@@ -48,8 +49,26 @@ class Translation {
                 }
                 break;
         }
+
+        this.#randomNames.push("Lasso");
+        this.#randomNames.push("Larame");
+        this.#randomNames.push("Lars");
+        this.#randomNames.push("Larry");
+        this.#randomNames.push("Lasagne");
+        this.#randomNames.push("Lachs");
+        this.#randomNames.push("Landratsamt");
+        this.#randomNames.push("Larissa");
+        this.#randomNames.push("Lacrose");
+        this.#randomNames.push("Laktose");
+        this.#randomNames.push("Lakitu");
+        this.#randomNames.push("Lattenrost");
     }
 
     static getTranslation(id) {return this.#dictionary[id];}
-    
+    static getFillerName()
+    {
+        let name = this.#randomNames[this.#randomNames.length-1];
+        this.#randomNames.pop();
+        return name;
+    }
 }
