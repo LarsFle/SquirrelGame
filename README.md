@@ -29,12 +29,13 @@ Action and direction can be set with the following methods (this can be done mul
 ### Orientation
 to help with orientation, the following methods allow to get infos about your surroundings:
   - this.getView() ->  returns an array with all pixels a radius around you (best to check it out by debugging, hard to explain)
+  - getViewDistance() -> returns the viewDistance set in the Worldcontroller
   - this.getX() -> get your x position in the world
   - this.getY() -> get your y position in the world
 ### General
 to help with decisionmaking, the following supportive methods exist:
   - getEnergy() -> returns your current Energy
-  -  getDirection() -> returns your currently planned direction
+  - getDirection() -> returns your currently planned direction
   - getAction() -> returns your currently planned action
   - getNuts() -> returns your current amount of nuts carried
   - getName() -> returns your name
@@ -42,8 +43,9 @@ to help with decisionmaking, the following supportive methods exist:
   - getNest() -> returns the coordinates of your nest
   - getScore() -> returns the amount of nuts you successfully secured
   - getCurrentSpeed() -> returns the current amount frames you will have to wait before being able to move again
+  - getLastActionPerformed() -> returns the last Action that was actually performed by your squirrel
+  - getCurrentField() -> returns the class of the field your squirrel is currently standing on
     
 ### The Forbidden Methods
 the following methods exists, but are highly forbidden to use (based on honor rules, it's basically cheating). By the nature of javascript, i have not been able to hide them from the bot yet
-  - setNuts(nut) -> yep, literally sets your nuts to a certain value (i think it's obvious why it is forbidden)
   - runLogicTick() -> runs whatever is currently set as the next action and direction, basically skipping the waiting time based on nuts and ground
